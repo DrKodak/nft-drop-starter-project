@@ -1,0 +1,22 @@
+{
+    "name": "SAP #0",
+    "symbol": "SAP",
+    "image": "0.png",
+    "attributes": [
+        {"trait_type": "Animal", "value": "octo"}
+    ],
+    "properties": {
+      "files": [
+        {
+          "uri": "0.png",
+          "type": "image/png"
+        }
+      ],
+      "creators": [
+        {
+          "address": "52QSwuM4nzsSW3WPJQ74MCbRDNLucqQEpfnNKvkzgV65",
+          "share": 100
+        }
+      ]
+    }
+  }

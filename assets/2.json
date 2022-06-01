@@ -1,0 +1,22 @@
+{
+    "name": "SAP #2",
+    "symbol": "SAP",
+    "image": "2.png",
+    "attributes": [
+      {"trait_type": "Animal", "value": "sloth"}
+    ],
+    "properties": {
+      "files": [
+        {
+          "uri": "2.png",
+          "type": "image/png"
+        }
+      ],
+      "creators": [
+        {
+          "address": "52QSwuM4nzsSW3WPJQ74MCbRDNLucqQEpfnNKvkzgV65",
+          "share": 100
+        }
+      ]
+    }
+  }

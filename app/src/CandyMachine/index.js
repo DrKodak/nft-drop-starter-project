@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Connection, PublicKey } from '@solana/web3.js';
 import { Program, Provider, web3 } from '@project-serum/anchor';
 import { MintLayout, TOKEN_PROGRAM_ID, Token } from '@solana/spl-token';
@@ -14,12 +14,55 @@ import {
   CIVIC
 } from './helpers';
 
+
 const { SystemProgram } = web3;
 const opts = {
   preflightCommitment: 'processed',
 };
 
+
 const CandyMachine = ({ walletAddress }) => {
+
+  // CODE THAT I AM MANUALLY ADDING IN
+  // Adding a state property inside the component
+  const [candyMachine, setCandyMachine] = useState(null);
+  useEffect(() => {
+    getCandyMachineState();
+  }, []);
+
+  const getProvider = () => {
+    const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST;
+    // Create  new connection object
+    const connection = new Connection(rpcHost);
+
+    // Create a new Solana Provider Object
+    const provider = new Provider(connection, window.solana, opts.preflightCommitment);
+    return provider;
+  };
+
+  // Declare getCandyMachineState as an async method
+  const getCandyMachineState = async () => {
+    const provider = getProvider();
+    // Get Metadata about your deployed candy machine program
+    const idl = await Program.fetchIdl(candyMachineProgram, provider);
+    // Create a program that you can call
+    const program = new Program(idl, candyMachineProgram, provider);
+    // Fetch the metadata from your candy machine
+    const candyMachine = await program.account.candyMachine.fetch(process.env.REACT_APP_CANDY_MACHINE_ID);
+    // Parse out all of our metadata and log it out
+    const itemsAvailable = candyMachine.data.itemsAvailable.toNumber();
+    const itemsRedeemed = candyMachine.itemsRedeemed.toNumber();
+    const itemsRemaining = itemsAvailable - itemsRedeemed;
+    const goLiveData = candyMachine.data.goLiveData.toNumber();
+    const presale = candyMachine.data.whitelistMintSettings && candyMachine.data.whitelistMintSettings.presale 
+                    && (!candyMachine.data.goLiveData || candyMachine.data.goLiveData.toNumber() > new Date().getTime()/1000);
+    // We will be using this later in our UI so generate this now
+    const goLiveDateTimeString = `${new Date(goLiveData*1000).toGMTString()}`
+
+    console.log({itemsAvailable, itemsRedeemed, itemsRemaining, goLiveData, goLiveDateTimeString, presale});
+  };
+  // END OF CODE THAT I AM MANUALLY ADDING IN
+
 
   const getCandyMachineCreator = async (candyMachine) => {
     const candyMachineID = new PublicKey(candyMachine);
