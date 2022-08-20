@@ -44,3 +44,25 @@ when making a web app, never commit the .env file if I'm uploading it to github 
 Provider objects are how the web app talks to the solana blockchain. It gives our client a connection to Solana and our wallet credential sso we can talk to programs on Solana
 
 The candy machine is effectively just a solana program that our web app can interact with. So to make rug pull, I just need to make a solana program that's sort of based off of the candy machine
+
+"Note: Your goLiveDateTimeString might look different. If you want to render the data in a person's local timezone, just change goLiveDateTimeString in getCandyMachineState to:
+
+const goLiveDateTimeString = `${new Date(
+  goLiveData * 1000
+).toLocaleDateString()} @ ${new Date(
+  goLiveData * 1000
+).toLocaleTimeString()}`;
+"
+
+.env needs to be in the app directory. when I moved it, the app didn't auto update. I had to kill everything then restart before it would pick it up
+Also "
+./src/CandyMachine/connection.js 24:19
+Module parse failed: Unexpected token (24:19)
+You may need an appropriate loader to handle this file type.
+|             errors = [];
+| 
+>             if (tx?.meta && tx.meta.logMessages) {
+|               tx.meta.logMessages.forEach(function (log) {
+|                 var regex = /Error: (.*)/gm;
+"
+has been an error I haven't been able to fix for some reason. I think there must be some weird package issue. I found a "solution" repo on github but it just straight up doesn't have that file. I'm not sure yet how it mints tokens

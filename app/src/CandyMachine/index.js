@@ -32,6 +32,8 @@ const CandyMachine = ({ walletAddress }) => {
 
   const getProvider = () => {
     const rpcHost = process.env.REACT_APP_SOLANA_RPC_HOST;
+    console.log(rpcHost); 
+    console.log(process.env.REACT_APP_SOLANA_RPC_HOST);
     // Create  new connection object
     const connection = new Connection(rpcHost);
 
@@ -53,9 +55,9 @@ const CandyMachine = ({ walletAddress }) => {
     const itemsAvailable = candyMachine.data.itemsAvailable.toNumber();
     const itemsRedeemed = candyMachine.itemsRedeemed.toNumber();
     const itemsRemaining = itemsAvailable - itemsRedeemed;
-    const goLiveData = candyMachine.data.goLiveData.toNumber();
+    const goLiveData = candyMachine.data.goLiveDate.toNumber();
     const presale = candyMachine.data.whitelistMintSettings && candyMachine.data.whitelistMintSettings.presale 
-                    && (!candyMachine.data.goLiveData || candyMachine.data.goLiveData.toNumber() > new Date().getTime()/1000);
+                    && (!candyMachine.data.goLiveDate || candyMachine.data.goLiveDate.toNumber() > new Date().getTime()/1000);
     // We will be using this later in our UI so generate this now
     const goLiveDateTimeString = `${new Date(goLiveData*1000).toGMTString()}`
 
@@ -344,7 +346,9 @@ const CandyMachine = ({ walletAddress }) => {
     <div className="machine-container">
       <p>Drop Date:</p>
       <p>Items Minted:</p>
-      <button className="cta-button mint-button" onClick={mintToken}>
+      <button className="cta-button mint-button" 
+      // onClick={mintToken}
+      >
         Mint NFT
       </button>
     </div>

@@ -70,7 +70,7 @@ const App = () => {
           <p className="sub-text">NFT drop machine with fair mint</p>
           {!walletAddress && renderNotConnectedContainer()}
         </div>
-        {/* {walletAddress && <CandyMachine walletAddress={window.solana}/>} */}
+        {walletAddress && <CandyMachine walletAddress={window.solana}/>}
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
           <a
